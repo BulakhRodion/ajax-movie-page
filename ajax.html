@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie DB</title>
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./styles/movie.scss" />
+  </head>
+  <body>
+    <div class="movie">
+      <div class="movie__container" id="container">
+        <form class="movie__search-form" id="searchForm">
+          <input type="text" class="movie__search-placeholder" id="searchInput" placeholder="Home alone"/>
+          <div class="movie__check-wrapper">
+            <label class="movie__label">
+              <input type="radio" name="type-selector" id="movies" value="movie" class="movie__type-selector" checked/> Movies
+            </label>
+            <label class="movie__label">
+              <input type="radio" name="type-selector" id="series" value="series" class="movie__type-selector"/> Series
+            </label>
+            <label class="movie__label">
+              <input type="radio" name="type-selector" id="episode" value="episode" class="movie__type-selector"/> Episode
+            </label>
+          </div>
+          <button class="movie__search-btn" type="submit" id="searchBtn">
+            <i class="fas fa-search"></i> Search
+          </button>
+        </form>
+        <div class="movie__cards" id="cards"></div>
+
+        <div class="movie__pagination-wrapper" id="pagWrapper">
+            <ul class="movie__pagination uk-pagination" id="pagination">
+                    
+            </ul>
+        </div>
+        
+        <div class="movie__details-card" id="details"></div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.2/js/uikit.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.2/js/components/pagination.js"></script> 
+    <script src="https://kit.fontawesome.com/adcbd3fc4f.js" crossorigin="anonymous"></script>
+    <script src="./js/ajax.js"></script>
+  </body>
+</html>

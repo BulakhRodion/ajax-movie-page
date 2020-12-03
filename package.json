@@ -1,0 +1,26 @@
+{
+  "name": "ajax-movie-page",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/BulakhRodion/ajax-movie-page.git",
+  "author": "Rodion Bulakh <bulakhrodion1@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "parcel index.html --open",
+    "dev:all": "parcel index.html ajax.html --open",
+    "build": "parcel build index.html ajax.html --no-source-maps --no-cache"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-clean-easy": "^1.0.2",
+    "sass": "^1.29.0"
+  },
+  "dependencies": {
+    "jquery": "^3.5.1",
+    "parcel-plugin-clean-easy": "^1.0.2",
+    "uikit": "^3.5.10"
+  },
+  "parcelCleanPath": [
+    "dist"
+  ]
+}
