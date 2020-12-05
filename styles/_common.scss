@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body,
+html {
+  min-height: 100vh;
+  font-size: 100%;
+}
+body {
+  background-color: rgb(97, 97, 97);
+  font-family: "Castoro", serif;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.container {
+  width: 100%;
+  max-width: 1200px;
+
+  padding: 0 15px;
+  margin: 0 auto;
+}
+.flex-col-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.flex-row-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+//UIkit styles
+.uk-pagination > li {
+  width: 20px;
+  height: 26px;
+  margin-right: 8px;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+.uk-pagination > li > a,
+.uk-pagination > li > span {
+  display: inline-block;
+  min-width: 16px;
+  padding: 3px 5px;
+  line-height: 20px;
+}
+.uk-pagination > li > a {
+  font-family: "Castoro", serif;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.767);
+  color: #020d18;
+  transition: background 0.3s ease;
+  transition: color 0.3s ease;
+  &:hover {
+    background: rgba(202, 43, 43, 0.603);
+    color: #ffffff;
+  }
+}
+.uk-pagination > .uk-active > span {
+  font-family: "Castoro", serif;
+  border-radius: 50%;
+  text-align: center;
+  background: rgba(192, 81, 81, 1);
+  color: #ffffff;
+}

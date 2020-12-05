@@ -874,7 +874,7 @@ try {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderFavCard = exports.renderDetailsData = exports.renderData = void 0;
+exports.renderDetailsData = exports.renderData = void 0;
 
 //main data render function
 var renderData = function renderData() {
@@ -886,7 +886,7 @@ var renderData = function renderData() {
       var Poster = _ref.Poster,
           Title = _ref.Title,
           Year = _ref.Year;
-      return "<div class=\"movie__cards-item\">\n          <div class=\"movie__img-wrapper\">\n              <img src=\"".concat(Poster === "N/A" ? "./assets/images/default.jpg" : Poster, "\" alt=\"poster\" class=\"movie__poster\">\n          </div>\n          <div class=\"movie__info-wrapper\">\n              <h3 class=\"movie__title\">Title: ").concat(Title, "</h3>\n              <p class=\"movie__info\">Release: ").concat(Year, "</p>\n              <button class=\"movie__add-btn\">Add to favorites <i class=\"fas fa-plus\"></i></button>\n              <a href=\"\" class=\"movie__details flex-row-centered\">See Details <i class=\"fas fa-eye movie__details-icon\"></i></a>\n          </div>\n      </div>");
+      return "<div class=\"movie__cards-item\">\n          <div class=\"movie__img-wrapper\">\n              <img src=\"".concat(Poster === "N/A" ? "./assets/images/default.jpg" : Poster, "\" alt=\"poster\" class=\"movie__poster\">\n          </div>\n          <div class=\"movie__info-wrapper\">\n              <h3 class=\"movie__title\">Title: ").concat(Title, "</h3>\n              <p class=\"movie__info\">Release: ").concat(Year, "</p>\n              <button class=\"movie__add-btn\">Add to favourites <i class=\"fas fa-plus\"></i></button>\n              <a href=\"\" class=\"movie__details flex-row-centered\">See Details <i class=\"fas fa-eye movie__details-icon\"></i></a>\n          </div>\n      </div>");
     }).join("");
   }
 }; //detail data render function
@@ -909,29 +909,9 @@ var renderDetailsData = function renderDetailsData() {
       return " <div class=\"movie__details-img\">\n                      <img src=\"".concat(Poster, "\" alt=\"poster\" class=\"movie__poster\">\n                  </div>\n                  <div class=\"movie__details-info\">\n                    <h3 class=\"movie__details-title\">Title: ").concat(Title, "</h3>\n                    <p class=\"movie__info\">Release: ").concat(Year, "</p>\n                    <p class=\"movie__info\">Genre: ").concat(Genre, "</p>\n                    <p class=\"movie__info\">Actors: ").concat(Actors, "</p>\n                    <p class=\"movie__info\">Description: ").concat(Plot, "</p>\n                  </div> ");
     }).join("");
   }
-}; //favorite card render
-
-
-exports.renderDetailsData = renderDetailsData;
-
-var renderFavCard = function renderFavCard() {
-  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var container = arguments.length > 1 ? arguments[1] : undefined;
-
-  if (data.length) {
-    container.innerHTML = data.map(function (_ref3) {
-      var Poster = _ref3.Poster,
-          Title = _ref3.Title,
-          Year = _ref3.Year,
-          Actors = _ref3.Actors,
-          Plot = _ref3.Plot,
-          Genre = _ref3.Genre;
-      return " <div class=\"favorites__card\">\n                    <div class=\"movie__details-img\">\n                        <img src=\"".concat(Poster, "\" alt=\"poster\" class=\"movie__poster\">\n                    </div>\n                    <div class=\"movie__details-info\">\n                      <h3 class=\"movie__details-title\">Title: ").concat(Title, "</h3>\n                      <p class=\"movie__info\">Release: ").concat(Year, "</p>\n                      <p class=\"movie__info\">Genre: ").concat(Genre, "</p>\n                      <p class=\"movie__info\">Actors: ").concat(Actors, "</p>\n                      <p class=\"movie__info\">Description: ").concat(Plot, "</p>\n                      <button class=\"favorites__rem-btn\">Remove from favorites <i class=\"fas fa-trash-alt\"></i></button>\n                    </div> \n                  </div>");
-    }).join("");
-  }
 };
 
-exports.renderFavCard = renderFavCard;
+exports.renderDetailsData = renderDetailsData;
 },{}],"js/requests/requests.js":[function(require,module,exports) {
 "use strict";
 
@@ -1029,7 +1009,7 @@ function _fetchMoviesById() {
   }));
   return _fetchMoviesById.apply(this, arguments);
 }
-},{}],"js/ajax.js":[function(require,module,exports) {
+},{}],"js/favourites.js":[function(require,module,exports) {
 "use strict";
 
 require("regenerator-runtime/runtime");
@@ -1042,182 +1022,58 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var search = document.getElementById("searchInput");
-var form = document.getElementById("searchForm");
-var pagWrapper = document.getElementById("pagWrapper");
-var type = document.querySelector(".movie__type-selector:checked");
-var details = document.getElementById("details");
-var cards = document.getElementById("cards"); //detail func
+document.addEventListener("DOMContentLoaded", function () {
+  var container = document.querySelector(".container");
+  var favId = JSON.parse(localStorage.movieId || "[]");
 
-function getDetails(search) {
-  var detailLink = document.getElementsByClassName("movie__details");
-
-  var _loop = function _loop(i) {
-    detailLink[i].addEventListener("click", /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
-        var detailsData;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                event.preventDefault();
-                detailsData = [];
-                _context.t0 = detailsData;
-                _context.next = 5;
-                return (0, _requests.fetchMoviesById)(search[i].imdbID);
-
-              case 5:
-                _context.t1 = _context.sent;
-
-                _context.t0.push.call(_context.t0, _context.t1);
-
-                (0, _render.renderDetailsData)(detailsData, details);
-                window.scrollTo({
-                  top: 5000,
-                  behavior: "smooth"
-                });
-
-              case 9:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      return function (_x) {
-        return _ref.apply(this, arguments);
-      };
-    }());
-  };
-
-  for (var i = 0; i != detailLink.length; i++) {
-    _loop(i);
+  function getFavDetails(_x) {
+    return _getFavDetails.apply(this, arguments);
   }
-} //add favourites
 
+  function _getFavDetails() {
+    _getFavDetails = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(search) {
+      var detailsData, i;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              detailsData = [];
+              i = 0;
 
-var favId = JSON.parse(localStorage.movieId || "[]");
+            case 2:
+              if (!(i != search.length)) {
+                _context.next = 12;
+                break;
+              }
 
-function addFavourites(search) {
-  var fav = document.getElementsByClassName("movie__add-btn");
+              _context.t0 = detailsData;
+              _context.next = 6;
+              return (0, _requests.fetchMoviesById)(search[i]);
 
-  var _loop2 = function _loop2(i) {
-    fav[i].addEventListener("click", function (event) {
-      event.preventDefault();
+            case 6:
+              _context.t1 = _context.sent;
 
-      if (favId.includes(search[i].imdbID)) {
-        alert("you already added this movie to your favourites");
-      } else {
-        favId.push(search[i].imdbID);
-        localStorage.setItem("movieId", JSON.stringify(favId));
-      }
-    });
-  };
+              _context.t0.push.call(_context.t0, _context.t1);
 
-  for (var i = 0; i != fav.length; i++) {
-    _loop2(i);
-  }
-} //pagination func
+              (0, _render.renderDetailsData)(detailsData, container);
 
+            case 9:
+              i++;
+              _context.next = 2;
+              break;
 
-function getPagination(totalRes) {
-  var prevPagination = document.querySelector(".uk-pagination"); //removing previous pagination
-
-  prevPagination.remove();
-  var pagination = document.createElement("ul"); //creating new pagination as list
-
-  pagination.classList = "movie__pagination uk-pagination";
-  pagination.id = "pagination";
-  pagWrapper.appendChild(pagination);
-  var newPagination = document.querySelector(".uk-pagination"); //cathing new pagination
-
-  UIkit.pagination(newPagination, {
-    //uikit component pagination
-    items: totalRes,
-    itemsOnPage: 10,
-    displayedPages: 4
-  });
-  var pages = pagination.childNodes; //select all li
-
-  $(".uk-pagination").on("click", function () {
-    var _loop3 = function _loop3(i) {
-      pages[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var _yield$fetchMovies, Search;
-
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return (0, _requests.fetchMovies)(search.value, type.value, pages[i].innerText);
-
-              case 2:
-                _yield$fetchMovies = _context2.sent;
-                Search = _yield$fetchMovies.Search;
-                (0, _render.renderData)(Search, cards);
-                getDetails(Search);
-
-              case 6:
-              case "end":
-                return _context2.stop();
-            }
+            case 12:
+            case "end":
+              return _context.stop();
           }
-        }, _callee2);
-      })));
-    };
-
-    //adding listeners to all pages  with getting their innertext as value
-    for (var i = 0; i != pages.length; i++) {
-      _loop3(i);
-    }
-  });
-  pages[0].click();
-}
-
-form.addEventListener("submit", /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(event) {
-    var type, _yield$fetchMovies2, Search, Error, totalResults;
-
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            //creating request on submit with data render
-            event.preventDefault();
-            type = document.querySelector(".movie__type-selector:checked");
-            _context3.next = 4;
-            return (0, _requests.fetchMovies)(search.value, type.value);
-
-          case 4:
-            _yield$fetchMovies2 = _context3.sent;
-            Search = _yield$fetchMovies2.Search;
-            Error = _yield$fetchMovies2.Error;
-            totalResults = _yield$fetchMovies2.totalResults;
-
-            if (Search) {
-              (0, _render.renderData)(Search, cards);
-              getDetails(Search);
-              addFavourites(Search);
-              getPagination(totalResults);
-            }
-
-            if (!Search && Error === "Movie not found!") {
-              alert("Movie not found!");
-            }
-
-          case 10:
-          case "end":
-            return _context3.stop();
         }
-      }
-    }, _callee3);
-  }));
+      }, _callee);
+    }));
+    return _getFavDetails.apply(this, arguments);
+  }
 
-  return function (_x2) {
-    return _ref3.apply(this, arguments);
-  };
-}());
+  getFavDetails(favId);
+});
 },{"regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","./render/render.js":"js/render/render.js","./requests/requests.js":"js/requests/requests.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -1246,7 +1102,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52244" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52039" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -1422,5 +1278,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/ajax.js"], null)
-//# sourceMappingURL=/ajax.8681c9e4.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/favourites.js"], null)
+//# sourceMappingURL=/favourites.245106a1.js.map

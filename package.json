@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel index.html --open",
-    "dev:all": "parcel index.html ajax.html --open",
-    "build": "parcel build index.html ajax.html --no-source-maps --no-cache"
+    "dev:all": "parcel index.html ajax.html favorites.html --open",
+    "build": "parcel build index.html ajax.html favorites.html --no-source-maps --no-cache"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4",

@@ -1,0 +1,254 @@
+$style: "movie";
+.#{$style} {
+  min-height: 100vh;
+  
+  background-color: #020d18;
+  background: #020d18 url("../assets/images/moviebg.png") center no-repeat;
+  background-size: cover;
+
+  padding: 100px 0;
+  &__search-form {
+    width: 50%;
+    position: relative;
+    
+    margin-bottom: 30px;
+  }
+  &__search-placeholder {
+    height: 40px;
+    width: 100%;
+    
+    outline: none;
+    border: none;
+    background-color: rgba($color: $white-color, $alpha: 0.8);
+    border-radius: 5px;
+    
+    color: $red-color;
+    font-size: $H160;
+    
+    padding: 10px 88px 10px 8px;
+    margin-bottom: 16px;
+    &:focus {
+      background-color: rgba($color: $white-color, $alpha: 1);
+    }
+    &:focus + .movie__search-btn {
+      background-color: rgba($semired-color, 1);
+    }
+  }
+  &__search-btn {
+    height: 40px;
+    width: 80px;
+    
+    position: absolute;
+    top: 0;
+    right: 0;
+    
+    outline: none;
+    border: none;
+    background-color: rgba($semired-color, 0.8);
+    cursor: pointer;
+    
+    color: $white-color;
+    font-size: $H160;
+  }
+  &__check-wrapper {
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
+  }
+  &__label {
+    color: $white-color;
+    font-size: $H160;
+    
+    cursor: pointer;
+    
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  &__cards {
+    width: 100%;
+    
+    display: flex;
+    flex-wrap: wrap;
+    
+    margin-bottom: 0;
+  }
+  &__cards-item {
+    flex-basis: calc(50% - 10px);
+    max-width: calc(50% - 10px);
+
+    display: flex;
+    
+    background-color: #020d18;
+
+    margin-right: 20px;
+    margin-bottom: 20px;
+    &:nth-child(even) {
+      margin-right: 0;
+    }
+    &:last-child {
+      margin-bottom: 20px;
+    }
+  }
+  &__img-wrapper {
+    flex-basis: 45%;
+    max-width: 45%;
+    height: 300px;
+    
+    display: flex;
+    
+    position: relative;
+    img {
+      width: 100%;
+      height: 100%;
+      
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  &__info-wrapper {
+    flex-basis: 65%;
+    max-width: 65%;
+    
+    display: flex;
+    flex-direction: column;
+    
+    padding: 30px 20px;
+  }
+  &__title {
+    color: $white-color;
+    font-size: $H180;
+    font-weight: 400;
+    
+    margin-bottom: auto;
+  }
+  &__info {
+    color: $white-color;
+    font-size: $H180;
+    font-weight: 400;
+    
+    margin-bottom: 10px;
+  }
+  &__details {
+    width: 140px;
+    height: 40px;
+    
+    color: $dark-color;
+    font-size: $H180;
+    font-weight: 600;
+    
+    background-color: $white-color;
+    border-radius: 10px;
+    
+    transition: color 0.3s ease;
+    &:hover {
+      color: rgba(192, 81, 81, 1);
+    }
+  }
+  &__details-icon {
+    padding-left: 8px;
+  }
+  &__pagination {
+    display: flex;
+    list-style: none;
+  }
+  &__pagination-page {
+    width: 18px;
+    height: 18px;
+    
+    border-radius: 50%;
+    background-color: $white-color;
+    cursor: pointer;
+    
+    color: $dark-color;
+    font-size: $H120;
+    font-weight: 600;
+    text-align: center;
+    
+    transition: color 0.3s ease;
+
+    margin-right: 8px;
+    
+    &:hover {
+      color: rgba($semired-color, 1);
+    }
+  }
+  &__details-card {
+    width: 100%;
+    background-color: $dark-color;
+  }
+  &__details-img {
+    flex-basis: 45%;
+    max-width: 45%;
+    min-height: 400px;
+    
+    display: flex;
+    position: relative;
+    img {
+      width: 100%;
+      height: 100%;
+      
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  &__details-info {
+    flex-basis: 65%;
+    max-width: 65%;
+    
+    display: flex;
+    flex-direction: column;
+    
+    padding: 30px 20px;
+  }
+  &__details-title {
+    color: $white-color;
+    font-size: $H200;
+    font-weight: 400;
+    
+    margin-bottom: 20px;
+  }
+  &__pagination-wrapper {
+    margin-bottom: 20px;
+  }
+  &__add-btn {
+    height: 40px;
+    width: 160px;
+    
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    
+    color: $white-color;
+    font-size: $H160;
+    font-weight: 400;
+    text-align: left;
+    
+    transition: color 0.4s ease;
+    margin-bottom: 10px;
+    i {
+      transition: transform 0.4s ease;
+     }
+     &:hover {
+      color: rgba($semired-color, 1)
+     }
+    &:hover > i{
+      transform: scale(1.3);
+    }
+  }
+}

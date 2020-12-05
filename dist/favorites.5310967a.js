@@ -1029,7 +1029,7 @@ function _fetchMoviesById() {
   }));
   return _fetchMoviesById.apply(this, arguments);
 }
-},{}],"js/ajax.js":[function(require,module,exports) {
+},{}],"js/favorites.js":[function(require,module,exports) {
 "use strict";
 
 require("regenerator-runtime/runtime");
@@ -1042,182 +1042,80 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var search = document.getElementById("searchInput");
-var form = document.getElementById("searchForm");
-var pagWrapper = document.getElementById("pagWrapper");
-var type = document.querySelector(".movie__type-selector:checked");
-var details = document.getElementById("details");
-var cards = document.getElementById("cards"); //detail func
+document.addEventListener("DOMContentLoaded", function () {
+  var container = document.querySelector(".container");
+  var favId = JSON.parse(localStorage.movieId || "[]");
 
-function getDetails(search) {
-  var detailLink = document.getElementsByClassName("movie__details");
+  function getFavDetails(_x) {
+    return _getFavDetails.apply(this, arguments);
+  }
 
-  var _loop = function _loop(i) {
-    detailLink[i].addEventListener("click", /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
-        var detailsData;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                event.preventDefault();
-                detailsData = [];
-                _context.t0 = detailsData;
-                _context.next = 5;
-                return (0, _requests.fetchMoviesById)(search[i].imdbID);
+  function _getFavDetails() {
+    _getFavDetails = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(search) {
+      var favorites, i, btn, card, _loop, _i;
 
-              case 5:
-                _context.t1 = _context.sent;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              favorites = [];
+              i = 0;
 
-                _context.t0.push.call(_context.t0, _context.t1);
+            case 2:
+              if (!(i != search.length)) {
+                _context.next = 12;
+                break;
+              }
 
-                (0, _render.renderDetailsData)(detailsData, details);
-                window.scrollTo({
-                  top: 5000,
-                  behavior: "smooth"
+              _context.t0 = favorites;
+              _context.next = 6;
+              return (0, _requests.fetchMoviesById)(search[i]);
+
+            case 6:
+              _context.t1 = _context.sent;
+
+              _context.t0.push.call(_context.t0, _context.t1);
+
+              (0, _render.renderFavCard)(favorites, container);
+
+            case 9:
+              i++;
+              _context.next = 2;
+              break;
+
+            case 12:
+              btn = document.querySelectorAll(".favorites__rem-btn");
+              card = document.querySelectorAll(".favorites__card");
+
+              _loop = function _loop(_i) {
+                btn[_i].id = favId[_i];
+
+                btn[_i].addEventListener("click", function () {
+                  favId.includes(btn[_i].id) ? favId.splice(btn[_i].id, 1) : alert("alredy removed");
+                  localStorage.setItem("movieId", JSON.stringify(favId));
+                  card[_i].style.opacity = 0;
+                  setTimeout(function () {
+                    card[_i].remove();
+                  }, 400);
                 });
+              };
 
-              case 9:
-              case "end":
-                return _context.stop();
-            }
+              for (_i = 0; _i != btn.length; _i++) {
+                _loop(_i);
+              }
+
+            case 16:
+            case "end":
+              return _context.stop();
           }
-        }, _callee);
-      }));
-
-      return function (_x) {
-        return _ref.apply(this, arguments);
-      };
-    }());
-  };
-
-  for (var i = 0; i != detailLink.length; i++) {
-    _loop(i);
-  }
-} //add favourites
-
-
-var favId = JSON.parse(localStorage.movieId || "[]");
-
-function addFavourites(search) {
-  var fav = document.getElementsByClassName("movie__add-btn");
-
-  var _loop2 = function _loop2(i) {
-    fav[i].addEventListener("click", function (event) {
-      event.preventDefault();
-
-      if (favId.includes(search[i].imdbID)) {
-        alert("you already added this movie to your favourites");
-      } else {
-        favId.push(search[i].imdbID);
-        localStorage.setItem("movieId", JSON.stringify(favId));
-      }
-    });
-  };
-
-  for (var i = 0; i != fav.length; i++) {
-    _loop2(i);
-  }
-} //pagination func
-
-
-function getPagination(totalRes) {
-  var prevPagination = document.querySelector(".uk-pagination"); //removing previous pagination
-
-  prevPagination.remove();
-  var pagination = document.createElement("ul"); //creating new pagination as list
-
-  pagination.classList = "movie__pagination uk-pagination";
-  pagination.id = "pagination";
-  pagWrapper.appendChild(pagination);
-  var newPagination = document.querySelector(".uk-pagination"); //cathing new pagination
-
-  UIkit.pagination(newPagination, {
-    //uikit component pagination
-    items: totalRes,
-    itemsOnPage: 10,
-    displayedPages: 4
-  });
-  var pages = pagination.childNodes; //select all li
-
-  $(".uk-pagination").on("click", function () {
-    var _loop3 = function _loop3(i) {
-      pages[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var _yield$fetchMovies, Search;
-
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return (0, _requests.fetchMovies)(search.value, type.value, pages[i].innerText);
-
-              case 2:
-                _yield$fetchMovies = _context2.sent;
-                Search = _yield$fetchMovies.Search;
-                (0, _render.renderData)(Search, cards);
-                getDetails(Search);
-
-              case 6:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      })));
-    };
-
-    //adding listeners to all pages  with getting their innertext as value
-    for (var i = 0; i != pages.length; i++) {
-      _loop3(i);
-    }
-  });
-  pages[0].click();
-}
-
-form.addEventListener("submit", /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(event) {
-    var type, _yield$fetchMovies2, Search, Error, totalResults;
-
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            //creating request on submit with data render
-            event.preventDefault();
-            type = document.querySelector(".movie__type-selector:checked");
-            _context3.next = 4;
-            return (0, _requests.fetchMovies)(search.value, type.value);
-
-          case 4:
-            _yield$fetchMovies2 = _context3.sent;
-            Search = _yield$fetchMovies2.Search;
-            Error = _yield$fetchMovies2.Error;
-            totalResults = _yield$fetchMovies2.totalResults;
-
-            if (Search) {
-              (0, _render.renderData)(Search, cards);
-              getDetails(Search);
-              addFavourites(Search);
-              getPagination(totalResults);
-            }
-
-            if (!Search && Error === "Movie not found!") {
-              alert("Movie not found!");
-            }
-
-          case 10:
-          case "end":
-            return _context3.stop();
         }
-      }
-    }, _callee3);
-  }));
+      }, _callee);
+    }));
+    return _getFavDetails.apply(this, arguments);
+  }
 
-  return function (_x2) {
-    return _ref3.apply(this, arguments);
-  };
-}());
+  getFavDetails(favId);
+});
 },{"regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","./render/render.js":"js/render/render.js","./requests/requests.js":"js/requests/requests.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -1422,5 +1320,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/ajax.js"], null)
-//# sourceMappingURL=/ajax.8681c9e4.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/favorites.js"], null)
+//# sourceMappingURL=/favorites.5310967a.js.map
