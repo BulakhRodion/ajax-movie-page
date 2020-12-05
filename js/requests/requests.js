@@ -1,4 +1,4 @@
-const BASE_URL = "http://www.omdbapi.com/?apikey=1320d6a&";
+const BASE_URL = "https://www.omdbapi.com/?apikey=1320d6a&";
 
 //fetch movies by title
 async function fetchMovies(search, type, page = 1) { 
